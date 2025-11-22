@@ -10,7 +10,12 @@ import { Loading } from './components/Loading';
 
 export const App: React.FC = () => {
   const [loading, setLoading] = useState(false);
-
+  const [selected, setSelected] = useState<string>("");
+  const GAMES = [
+	{id: "cub3d", name: "cub3D"},
+	{id: "mandelbrot", name: "Mandelbrot"},
+	{id: "julia", name: "Julia"},
+  ];
   const handleSelect = async (game: string) => {
     setLoading(true);
 
@@ -33,7 +38,13 @@ export const App: React.FC = () => {
 
   return (
     <div className="flex h-screen relative">
-      <Sidebar onSelect={handleSelect} />
+      <Sidebar 
+        games={GAMES}
+        selected={selected}
+        onSelect={(id) => {
+          setSelected(id);
+          handleSelect(id);
+        }} />
       <GameCanvas />
       {loading && <Loading message="Loading game..." />}
     </div>

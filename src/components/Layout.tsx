@@ -1,10 +1,10 @@
-import Sidebar from "./Sidebar";
+import { Sidebar } from "./Sidebar";
 import type { ReactNode } from "react";
 
 type LayoutProps = {
-  children: ReactNode;
-  selected: string;
-  onSelect: (id: string) => void;
+  children: ReactNode,
+  selected: string,
+  onSelect: (id: string) => void
 };
 
 const GAMES = [

@@ -1,7 +1,14 @@
 import React from 'react';
 
+export type GameInfo = {
+	id: string;
+	name: string;
+}
+
 interface SidebarProps {
-  onSelect: (game: string) => void;
+	games: GameInfo[];
+	selected: string;
+	onSelect: (game: string) => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ onSelect }) => {
