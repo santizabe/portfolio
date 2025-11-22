@@ -1,4 +1,4 @@
-declare module '../wasm/cub3d/cub3D.js' {
+declare module 'cub3d/cub3D.js' {
   interface CubeModule {
     createCube: (map: string) => void;
   }
@@ -6,7 +6,7 @@ declare module '../wasm/cub3d/cub3D.js' {
   export default Cube;
 }
 
-declare module '../wasm/fractol/fractol.js' {
+declare module 'fractol/fractol.js' {
   interface FractolModule {
     createFractol: (...args: string[]) => void;
   }
