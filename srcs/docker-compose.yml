@@ -1,0 +1,34 @@
+services:
+  # The Fastify App
+  server:
+    build:
+      context: ./server
+    image: server
+    container_name: server
+    ports:
+      - "3000"
+    env_file: .env
+    environment:
+      # 'mongo' here refers to the service name defined below
+      - MONGO_URI="mongodb+srv://${MONGO_USER}:${MONGO_PWD}@cluster0.priymua.mongodb.net/?appName=Cluster0"
+      # Pass your token here or use a .env file
+      - GH_TOKEN=${GH_TOKEN} 
+
+  front:
+    build:
+      context: ./front
+    image: front
+    container_name: front
+    ports: "5173"
+  
+  nginx:
+    build:
+      context: ./nginx
+    image: nginx
+    container_name: nginx
+    ports: "443:443"
+    restart: on-failure
+
+networks:
+  my_network:
+    name: my_network

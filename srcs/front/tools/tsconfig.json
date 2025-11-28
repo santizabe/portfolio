@@ -7,6 +7,10 @@
   "compilerOptions": {
     "allowJs": true,
     "types": ["node"],
-    "typeRoots": ["./src/wasm/types", "./node_modules/@types"]
-  }
+    "typeRoots": ["./src/wasm/types", "./node_modules/@types"],
+	"baseUrl": ".",
+	"paths": {
+		"@/*": ["./src/*"]
+	}
+	}
 }

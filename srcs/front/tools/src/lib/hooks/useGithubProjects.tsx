@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { fetchGithubProjects } from "../utils/fetchGithub";
-import type { GithubProject } from "../utils/fetchGithub";
+import { fetchGithubProjects } from "../_utils/fetchGithub";
+import type { GithubProject } from "../_utils/fetchGithub";
 
 
 

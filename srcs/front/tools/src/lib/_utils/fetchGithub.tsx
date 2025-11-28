@@ -1,15 +1,23 @@
 export interface GithubProject {
-  name: string;
-  description: string | null;
-  html_url: string;
-  languages: string[]; // updated
-  topics: string[];
-  created_at: string;
-  updated_at: string;
+  _id: string,
+  github_id: Number,
+  description: string | null,
+  full_name: string,
+  language: string | null,
+  last_synced: string,
+  name: string,
+  readme: string,
+  stars: number,
+  url: string
 }
 
-export async function fetchGithubProjects(username: string): Promise<GithubProject[]> {
-  const response = await fetch(`https://api.github.com/users/${username}/repos`, {
+export interface GhResponse {
+	count: number,
+	data: Array<Object>
+}
+
+export async function fetchGithubProjects(username: string): Promise<GhResponse[]> {
+  const response = await fetch(`http://localhost:3000/repos`, {
     headers: {
       Accept: "application/vnd.github+json",
     },
@@ -19,13 +27,11 @@ export async function fetchGithubProjects(username: string): Promise<GithubProje
     throw new Error(`Failed to fetch projects for user ${username}`);
   }
 
-  const repos = await response.json();
+  const data = await response.json();
 
   // Fetch languages for each repo
   const projects = await Promise.all(
-    repos.map(async (repo: any) => {
-      const langRes = await fetch(repo.languages_url);
-      const langData = langRes.ok ? await langRes.json() : {};
+    data?.data.map(async (repo: any) => {
 
       return {
         name: repo.name,
