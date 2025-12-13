@@ -8,8 +8,10 @@ import { motion } from "framer-motion";
 import { useGithubProjects } from "../lib/hooks/useGithubProjects";
 import { Loading } from "../components/Loading";
 
+
 export default function LandingPage() {
   const {projects, loading} = useGithubProjects("santizabe");
+  console.log(projects);
   return (
     <>
       <div className="min-h-screen bg-gray-50 flex flex-col items-center py-16 px-4">
@@ -52,7 +54,7 @@ export default function LandingPage() {
                   )} */}
 
                   <div className="flex flex-wrap gap-2">
-                    {project.languages.map((lang: any, idx: any) => (
+                    {Object.keys(project.languages).map((lang: any, idx: any) => (
                       <span
                         key={idx}
                         className="px-3 py-1 bg-gray-200 text-sm rounded-full text-gray-700"

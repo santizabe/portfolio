@@ -1,43 +1,16 @@
-export interface GithubProject {
-  name: string;
-  description: string | null;
-  html_url: string;
-  languages: string[]; // updated
-  topics: string[];
-  created_at: string;
-  updated_at: string;
-}
+import { Octokit } from "@octokit/core";
+import { restEndpointMethods } from "@octokit/plugin-rest-endpoint-methods";
 
-export async function fetchGithubProjects(username: string): Promise<GithubProject[]> {
-  const response = await fetch(`https://api.github.com/users/${username}/repos`, {
-    headers: {
-      Accept: "application/vnd.github+json",
-    },
+
+export async function fetchGithubProjects(username: string): Promise<any[]> {
+  const MyOctokit = Octokit.plugin(restEndpointMethods);
+  const octokit = new MyOctokit();
+
+  const repos = await octokit.rest.repos.listForUser({
+    type: "all",
+    username
   });
-
-  if (!response.ok) {
-    throw new Error(`Failed to fetch projects for user ${username}`);
-  }
-
-  const repos = await response.json();
-
-  // Fetch languages for each repo
-  const projects = await Promise.all(
-    repos.map(async (repo: any) => {
-      const langRes = await fetch(repo.languages_url);
-      const langData = langRes.ok ? await langRes.json() : {};
-
-      return {
-        name: repo.name,
-        description: repo.description,
-        html_url: repo.html_url,
-        languages: Object.keys(langData), // convert to array
-        topics: repo.topics ?? [],
-        created_at: repo.created_at,
-        updated_at: repo.updated_at,
-      };
-    })
-  );
-
+  // console.log(repos);
+  const projects = repos.data;
   return projects;
 }
